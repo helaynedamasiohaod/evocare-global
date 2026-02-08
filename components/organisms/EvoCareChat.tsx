@@ -50,9 +50,9 @@ export const EvoCareChat: React.FC<EvoCareChatProps> = ({ formData }) => {
   useEffect(() => {
     const userTurns = messages.filter(m => m.sender === 'user').length;
     setTurnCount(userTurns);
-    
-    // Se atingiu 3 turnos, encerra a conversa
-    if (userTurns >= 3) {
+
+    // Se atingiu 7 turnos, encerra a conversa
+    if (userTurns >= 7) {
       setConversationEnded(true);
     }
   }, [messages]);
