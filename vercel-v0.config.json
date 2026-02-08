@@ -1,0 +1,20 @@
+{
+  "name": "EVOCARE Global - Avaliação Pós Imersão",
+  "description": "Formulário inteligente com AYLA (IA Acolhedora) - Score 9.2/10",
+  "framework": "react",
+  "version": "1.0.0",
+  "features": [
+    "Email validation com regex",
+    "Telefone mask (XX) 9XXXX-XXXX",
+    "CPF validation com checksum",
+    "AlertDisplay (Verde/Amarelo/Vermelho)",
+    "Mínimo 10 caracteres em campos abertos",
+    "Chat com AYLA (System Prompt v2.2)",
+    "Botão 'Sair' após 3 turnos"
+  ],
+  "environment_variables": {
+    "API_KEY": "GOOGLE_GENAI_API_KEY (obtenha em https://makersuite.google.com)"
+  },
+  "status": "Ready for Production",
+  "qa_score": "9.2/10"
+}

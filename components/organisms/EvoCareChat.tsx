@@ -61,7 +61,11 @@ export const EvoCareChat: React.FC<EvoCareChatProps> = ({ formData }) => {
     const startConversation = async () => {
       setIsLoading(true);
       try {
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const apiKey = import.meta.env.VITE_GOOGLE_GENAI_API_KEY;
+        if (!apiKey) {
+          throw new Error('VITE_GOOGLE_GENAI_API_KEY não configurada');
+        }
+        const ai = new GoogleGenAI({ apiKey });
         const initialContext = createInitialContext(formData);
         
         const response = await ai.models.generateContent({
@@ -96,7 +100,11 @@ export const EvoCareChat: React.FC<EvoCareChatProps> = ({ formData }) => {
     setIsLoading(true);
 
     try {
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const apiKey = import.meta.env.VITE_GOOGLE_GENAI_API_KEY;
+        if (!apiKey) {
+          throw new Error('VITE_GOOGLE_GENAI_API_KEY não configurada');
+        }
+        const ai = new GoogleGenAI({ apiKey });
         const chatWithHistory = ai.chats.create({
             model: 'gemini-3-flash-preview',
             config: {
