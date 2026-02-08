@@ -348,10 +348,10 @@ const ResultView: React.FC<ResultViewProps> = ({ alertLevel, onReset }) => {
         <Display className="text-brand-teal text-6xl md:text-8xl">Você é Livre!</Display>
         <div className="space-y-6">
           <Text className="text-2xl !text-white font-medium">Parabéns por concluir esta etapa da sua jornada.</Text>
-          <Text className="text-lg">Suas respostas indicam um estado de plenitude e ressignificação saudável. Você integrou bem o aprendizado da Imersão e está pronto para viver a vida extraordinária que escolheu.</Text>
+          <Text className="text-lg">Você completou a Imersão e integrou profundamente seus aprendizados. Sua transformação é real e está apenas começando. Agora é hora de viver a vida extraordinária que você escolheu, com a força e clareza que conquistou.</Text>
         </div>
         <div className="pt-8">
-          <Button size="lg" icon className="bg-evo-gradient text-white" onClick={onReset}>
+          <Button size="lg" className="bg-evo-gradient text-white px-16" onClick={onReset}>
             Sair
           </Button>
         </div>
