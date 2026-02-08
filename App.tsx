@@ -348,32 +348,12 @@ const ResultView: React.FC<ResultViewProps> = ({ alertLevel, onReset }) => {
         <Display className="text-brand-teal text-6xl md:text-8xl">Você é Livre!</Display>
         <div className="space-y-6">
           <Text className="text-2xl !text-white font-medium">Parabéns por concluir esta etapa da sua jornada.</Text>
-          <Text className="text-lg">Suas respostas indicam um estado de plenitude e ressignificação saudável. Você integrou bem o aprendizado da Imersão.</Text>
-          <Text className="text-lg">Continue aplicando as ferramentas do Método EVO e viva a vida extraordinária que você escolheu.</Text>
-        </div>
-        <div className="p-8 bg-brand-surface border border-brand-teal/30 rounded-3xl w-full space-y-6">
-          <Heading as="h4" className="text-brand-teal">Próximos Passos</Heading>
-          <Text>Mesmo em plenitude, você pode se beneficiar de:
-          <ul className="text-left space-y-3 mt-4">
-            <li className="flex items-start gap-3">
-              <span className="text-brand-teal font-bold">→</span>
-              <span>Acompanhamento com um ARP para aprofundar sua jornada</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-brand-teal font-bold">→</span>
-              <span>Compartilhar sua experiência com outros participantes</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-brand-teal font-bold">→</span>
-              <span>Explorar outros programas EVO Care para crescimento contínuo</span>
-            </li>
-          </ul></Text>
-          <Button size="lg" icon className="w-full bg-brand-teal hover:bg-brand-teal/80 text-brand-black" onClick={() => window.open('https://wa.me/5561986060051?text=Olá,%20fiz%20a%20avaliação%20EVO%20Care%20e%20fui%20categorizado%20como%20bem%20estruturado.%20Gostaria%20de%20conhecer%20os%20próximos%20passos.', '_blank')}>
-            Conversar com a Equipe EVO Care
-          </Button>
+          <Text className="text-lg">Suas respostas indicam um estado de plenitude e ressignificação saudável. Você integrou bem o aprendizado da Imersão e está pronto para viver a vida extraordinária que escolheu.</Text>
         </div>
         <div className="pt-8">
-          <Button variant="outline" size="lg" onClick={onReset}>Fazer Avaliação Novamente</Button>
+          <Button size="lg" icon className="bg-evo-gradient text-white" onClick={onReset}>
+            Sair
+          </Button>
         </div>
       </section>
     );
