@@ -362,6 +362,7 @@ const App: React.FC = () => {
   const [view, setView] = useState<'landing' | 'form' | 'result' | 'chat'>('landing');
   const [currentStep, setCurrentStep] = useState(0); // 0: Identificação, 1: Perguntas 1-5, 2: 6-10, 3: 11-15
   const [formData, setFormData] = useState<FormState>(initialFormState);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [alertLevel, setAlertLevel] = useState<AlertLevel>('verde');
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
