@@ -95,6 +95,9 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({ currentStep }) => (
 interface FormStepProps {
   formData: FormState;
   setFormData: React.Dispatch<React.SetStateAction<FormState>>;
+  fieldErrors?: Record<string, string>;
+  setFieldErrors?: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+  handleOpenFieldChange?: (value: string, field: 'q3' | 'q7' | 'q15') => void;
 }
 
 // Validation functions
@@ -147,31 +150,8 @@ const isValidCPF = (cpf: string) => {
   return true;
 };
 
-// Função para verificar se há erros no FormStep atual
-const hasErrorsInCurrentStep = (): boolean => {
-  if (currentStep === 1) {
-    return fieldErrors.q3 !== '';
-  }
-  if (currentStep === 2) {
-    return fieldErrors.q7 !== '';
-  }
-  if (currentStep === 3) {
-    return fieldErrors.q15 !== '';
-  }
-  return false;
-};
 
-// Handler para campos abertos (Q3, Q7, Q15)
-const handleOpenFieldChange = (value: string, field: 'q3' | 'q7' | 'q15') => {
-  setFormData(prev => ({...prev, [field]: value}));
-  const minChars = 10;
-  const error = value.length > 0 && value.length < minChars 
-    ? `Mínimo ${minChars} caracteres` 
-    : '';
-  setFieldErrors(prev => ({...prev, [field]: error}));
-};
-
-const FormStep0: React.FC<FormStepProps> = ({ formData, setFormData }) => {
+const FormStep0: React.FC<FormStepProps> = ({ formData, setFormData, fieldErrors = {}, setFieldErrors = () => {} }) => {
   const handleEmailChange = (value: string) => {
     setFormData(prev => ({...prev, email: value}));
     setFieldErrors(prev => ({
@@ -188,7 +168,7 @@ const FormStep0: React.FC<FormStepProps> = ({ formData, setFormData }) => {
   const handleCPFChange = (value: string) => {
     const formatted = formatCPF(value);
     setFormData(prev => ({...prev, cpf: formatted}));
-    
+
     if (formatted.length === 14) {
       setFieldErrors(prev => ({
         ...prev,
@@ -213,16 +193,16 @@ const FormStep0: React.FC<FormStepProps> = ({ formData, setFormData }) => {
   );
 };
 
-const FormStep1: React.FC<FormStepProps> = ({ formData, setFormData }) => (
+const FormStep1: React.FC<FormStepProps> = ({ formData, setFormData, fieldErrors = {}, handleOpenFieldChange = () => {} }) => (
   <div className="space-y-10 animate-fade-in">
     <Heading className="text-2xl">II. Filtro de Percepção (1/3)</Heading>
-    <RadioGroup 
+    <RadioGroup
       label="1. Como você descreveria seu estado emocional geral HOJE, em comparação ao período anterior à Imersão?"
       options={['Sinto-me muito melhor, em paz e com clareza.', 'Sinto-me igual, mas com novos conhecimentos.', 'Sinto-me confuso(a) ou com a sensação de algo "pendente".', 'Sinto-me emocionalmente mais frágil ou pior do que antes.']}
       value={formData.q1}
       onChange={(v: string) => setFormData(prev => ({...prev, q1: v}))}
     />
-    <RadioGroup 
+    <RadioGroup
       label="2. Sobre o processo de 'Ressignificar' vivido no evento, qual alternativa melhor define sua situação atual?"
       options={['Ressignifiquei o que era necessário e sinto paz em relação a isso.', 'Acredito que ressignifiquei com a pessoa errada ou de forma incompleta.', 'Sinto que ainda preciso ressignificar com mais pessoas ou outras situações.', 'Sinto que não consegui ressignificar nada durante o processo.']}
       value={formData.q2}
@@ -244,10 +224,10 @@ const FormStep1: React.FC<FormStepProps> = ({ formData, setFormData }) => (
   </div>
 );
 
-const FormStep2: React.FC<FormStepProps> = ({ formData, setFormData }) => (
+const FormStep2: React.FC<FormStepProps> = ({ formData, setFormData, fieldErrors = {}, handleOpenFieldChange = () => {} }) => (
   <div className="space-y-10 animate-fade-in">
     <Heading className="text-2xl">II. Filtro de Percepção (2/3)</Heading>
-    <RadioGroup 
+    <RadioGroup
       label="6. Você sente que as ferramentas aprendidas no Método EVO estão sendo fáceis de aplicar sozinho(a)?"
       options={['Sim, estou aplicando com facilidade.', 'Tenho algumas dificuldades e gostaria de auxílio para praticar.', 'Não estou conseguindo aplicar nada do que vi.']}
       value={formData.q6}
@@ -275,28 +255,28 @@ const FormStep2: React.FC<FormStepProps> = ({ formData, setFormData }) => (
   </div>
 );
 
-const FormStep3: React.FC<FormStepProps> = ({ formData, setFormData }) => (
+const FormStep3: React.FC<FormStepProps> = ({ formData, setFormData, fieldErrors = {}, handleOpenFieldChange = () => {} }) => (
   <div className="space-y-10 animate-fade-in">
     <Heading className="text-2xl">II. Filtro de Percepção (3/3)</Heading>
-    <RadioGroup 
+    <RadioGroup
       label="11. Em algum momento, desde o término do evento, você teve pensamentos de que a vida não vale mais a pena?"
       options={['Sim.', 'Não.']}
       value={formData.q11}
       onChange={(v: string) => setFormData(prev => ({...prev, q11: v}))}
     />
-    <RadioGroup 
+    <RadioGroup
       label="12. Você já possui ou teve algum diagnóstico de transtorno de ansiedade, depressão, pânico ou outra condição de saúde mental?"
       options={['Sim, e estou em acompanhamento profissional.', 'Sim, mas não estou em tratamento no momento.', 'Não.']}
       value={formData.q12}
       onChange={(v: string) => setFormData(prev => ({...prev, q12: v}))}
     />
-    <RadioGroup 
+    <RadioGroup
       label="13. Você acredita que o apoio de um Amante Radical de Pessoas (ARP) através de um processo de Coaching ajudaria você a organizar seus próximos passos?"
       options={['Sim, sinto que esse acompanhamento é o que me falta agora.', 'Talvez, gostaria de entender melhor como isso pode me ajudar.', 'Não, sinto que já tenho o que preciso para seguir.']}
       value={formData.q13}
       onChange={(v: string) => setFormData(prev => ({...prev, q13: v}))}
     />
-    <RadioGroup 
+    <RadioGroup
       label="14. Em qual dessas áreas você sente que um processo de auxílio (Coaching Pro Bono) faria mais diferença hoje?"
       options={['Relacionamentos Familiares / Amorosos.', 'Carreira, Finanças e Propósito.', 'Autoconfiança e Gestão das Emoções.', 'Nenhuma, estou bem em todas as áreas.']}
       value={formData.q14}
@@ -422,6 +402,30 @@ const App: React.FC = () => {
     scrollToTop();
   };
 
+  // Função para verificar se há erros no FormStep atual
+  const hasErrorsInCurrentStep = (): boolean => {
+    if (currentStep === 1) {
+      return fieldErrors.q3 !== '';
+    }
+    if (currentStep === 2) {
+      return fieldErrors.q7 !== '';
+    }
+    if (currentStep === 3) {
+      return fieldErrors.q15 !== '';
+    }
+    return false;
+  };
+
+  // Handler para campos abertos (Q3, Q7, Q15)
+  const handleOpenFieldChange = (value: string, field: 'q3' | 'q7' | 'q15') => {
+    setFormData(prev => ({...prev, [field]: value}));
+    const minChars = 10;
+    const error = value.length > 0 && value.length < minChars
+      ? `Mínimo ${minChars} caracteres`
+      : '';
+    setFieldErrors(prev => ({...prev, [field]: error}));
+  };
+
   return (
     <main className="bg-brand-black min-h-screen text-white font-body selection:bg-brand-purple selection:text-white">
       {view === 'landing' && <LandingView onStart={handleStart} />}
@@ -434,10 +438,10 @@ const App: React.FC = () => {
           </div>
 
           <div className="bg-brand-surface/40 backdrop-blur-xl border border-white/5 p-8 md:p-12 rounded-[40px] shadow-2xl">
-            {currentStep === 0 && <FormStep0 formData={formData} setFormData={setFormData} />}
-            {currentStep === 1 && <FormStep1 formData={formData} setFormData={setFormData} />}
-            {currentStep === 2 && <FormStep2 formData={formData} setFormData={setFormData} />}
-            {currentStep === 3 && <FormStep3 formData={formData} setFormData={setFormData} />}
+            {currentStep === 0 && <FormStep0 formData={formData} setFormData={setFormData} fieldErrors={fieldErrors} setFieldErrors={setFieldErrors} />}
+            {currentStep === 1 && <FormStep1 formData={formData} setFormData={setFormData} fieldErrors={fieldErrors} handleOpenFieldChange={handleOpenFieldChange} />}
+            {currentStep === 2 && <FormStep2 formData={formData} setFormData={setFormData} fieldErrors={fieldErrors} handleOpenFieldChange={handleOpenFieldChange} />}
+            {currentStep === 3 && <FormStep3 formData={formData} setFormData={setFormData} fieldErrors={fieldErrors} handleOpenFieldChange={handleOpenFieldChange} />}
 
             <div className="mt-16 flex justify-between items-center border-t border-white/5 pt-12">
               <Button 
