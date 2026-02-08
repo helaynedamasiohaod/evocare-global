@@ -111,7 +111,7 @@ const formatPhoneNumber = (value: string) => {
   if (cleaned.length <= 2) return cleaned;
   if (cleaned.length <= 7) return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2)}`;
   if (cleaned.length <= 11) {
-    return `(${cleaned.slice(0, 2)}) 9${cleaned.slice(2, 7)}-${cleaned.slice(7, 11)}`;
+    return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7, 11)}`;
   }
   return cleaned.slice(0, 11);
 };
@@ -183,7 +183,7 @@ const FormStep0: React.FC<FormStepProps> = ({ formData, setFormData, fieldErrors
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <Input label="Nome Completo" value={formData.nome} onChange={(v: string) => setFormData(prev => ({...prev, nome: v}))} />
       <Input label="E-mail" type="email" value={formData.email} onChange={handleEmailChange} error={fieldErrors.email} />
-      <Input label="Telefone (WhatsApp)" placeholder="(00) 00000-0000" value={formData.telefone} onChange={handlePhoneChange} maxLength="14" />
+      <Input label="Telefone (WhatsApp)" placeholder="(00) 9XXXX-XXXX" value={formData.telefone} onChange={handlePhoneChange} maxLength="15" />
       <Input label="CPF" placeholder="000.000.000-00" value={formData.cpf} onChange={handleCPFChange} error={fieldErrors.cpf} maxLength="14" />
       <div className="md:col-span-2">
         <Input label="Cidade onde participou da Imersão" value={formData.cidade} onChange={(v: string) => setFormData(prev => ({...prev, cidade: v}))} />
@@ -348,10 +348,32 @@ const ResultView: React.FC<ResultViewProps> = ({ alertLevel, onReset }) => {
         <Display className="text-brand-teal text-6xl md:text-8xl">Você é Livre!</Display>
         <div className="space-y-6">
           <Text className="text-2xl !text-white font-medium">Parabéns por concluir esta etapa da sua jornada.</Text>
-          <Text className="text-lg">Suas respostas indicam um estado de plenitude e ressignificação saudável. Continue aplicando as ferramentas do Método EVO e viva a vida extraordinária que você escolheu.</Text>
+          <Text className="text-lg">Suas respostas indicam um estado de plenitude e ressignificação saudável. Você integrou bem o aprendizado da Imersão.</Text>
+          <Text className="text-lg">Continue aplicando as ferramentas do Método EVO e viva a vida extraordinária que você escolheu.</Text>
+        </div>
+        <div className="p-8 bg-brand-surface border border-brand-teal/30 rounded-3xl w-full space-y-6">
+          <Heading as="h4" className="text-brand-teal">Próximos Passos</Heading>
+          <Text>Mesmo em plenitude, você pode se beneficiar de:
+          <ul className="text-left space-y-3 mt-4">
+            <li className="flex items-start gap-3">
+              <span className="text-brand-teal font-bold">→</span>
+              <span>Acompanhamento com um ARP para aprofundar sua jornada</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-brand-teal font-bold">→</span>
+              <span>Compartilhar sua experiência com outros participantes</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="text-brand-teal font-bold">→</span>
+              <span>Explorar outros programas EVO Care para crescimento contínuo</span>
+            </li>
+          </ul></Text>
+          <Button size="lg" icon className="w-full bg-brand-teal hover:bg-brand-teal/80 text-brand-black" onClick={() => window.open('https://wa.me/5561986060051?text=Olá,%20fiz%20a%20avaliação%20EVO%20Care%20e%20fui%20categorizado%20como%20bem%20estruturado.%20Gostaria%20de%20conhecer%20os%20próximos%20passos.', '_blank')}>
+            Conversar com a Equipe EVO Care
+          </Button>
         </div>
         <div className="pt-8">
-          <Button variant="outline" size="lg" onClick={onReset}>Voltar ao Início</Button>
+          <Button variant="outline" size="lg" onClick={onReset}>Fazer Avaliação Novamente</Button>
         </div>
       </section>
     );
