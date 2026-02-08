@@ -378,16 +378,14 @@ const App: React.FC = () => {
   };
 
   const calculateTriage = (): AlertLevel => {
-    const isRed = 
-      formData.q11 === 'Sim' || 
+    const isRed =
+      formData.q11 === 'Sim' ||
       (formData.q8.length > 0 && formData.q8.some(s => s !== 'Nenhuma das anteriores.') && formData.q1 === 'Sinto-me emocionalmente mais frágil ou pior do que antes.');
-    
-    const isYellow = 
+
+    const isYellow =
       formData.q2 === 'Acredito que ressignifiquei com a pessoa errada ou de forma incompleta.' ||
       formData.q2 === 'Sinto que ainda preciso ressignificar com mais pessoas ou outras situações.' ||
-      formData.q13 === 'Sim, sinto que esse acompanhamento é o que me falta agora.' ||
-      formData.q13 === 'Talvez, gostaria de entender melhor como isso pode me ajudar.' ||
-      formData.q4 !== 'Não, sinto-me pleno(a).';
+      formData.q13 === 'Sim, sinto que esse acompanhamento é o que me falta agora.';
 
     if (isRed) return 'vermelho';
     if (isYellow) return 'amarelo';
