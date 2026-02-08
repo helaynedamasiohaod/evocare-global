@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "devCommand": "vite",
+  "env": {
+    "VITE_APP_NAME": "EVOCARE Global",
+    "VITE_APP_VERSION": "1.0.0"
+  }
+}
